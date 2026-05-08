@@ -51,13 +51,13 @@ class LinearReg:
         return (1/(2*m))*np.sum((y_est-y)**2)
 
     def r2_score(self, x, y):
-    y_pred = self.predict(x)
-    ss_res = np.sum((y - y_pred) ** 2)  
-    # how wrong your model is
-    ss_tot = np.sum((y - np.mean(y)) ** 2)  
-    # how wrong just using the mean would be
-    return 1 - (ss_res / ss_tot)
-    # ratio of your error vs baseline error
+        y_pred = self.predict(x)
+        ss_res = np.sum((y - y_pred) ** 2)  
+        # how wrong your model is
+        ss_tot = np.sum((y - np.mean(y)) ** 2)  
+        # how wrong just using the mean would be
+        return 1 - (ss_res / ss_tot)
+        # ratio of your error vs baseline error
     
     
 data = fetch_california_housing()
