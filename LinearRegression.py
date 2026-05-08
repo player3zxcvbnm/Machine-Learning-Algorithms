@@ -68,7 +68,7 @@ model=LinearReg(0.03,1000)
 
 model.update(x,y)
 
-x_in=np.array([5])
+x_in = np.array([[5]]) 
 y_out=model.predict(x_in)
 print(f"Estimated output = {y_out[0]}")
 model.graph(x,y,0)
