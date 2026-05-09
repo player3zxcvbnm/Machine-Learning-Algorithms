@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
 
 class LogisticReg:
     def __init__(self, LearnRate=0.01, Iterations=1000):
@@ -62,15 +63,34 @@ class LogisticReg:
         plt.legend()
         plt.show()
 
+    def accuracy(self, x, y):
+        predictions = self.output(x)
+        return np.mean(predictions == y)
 
-x_tr=np.array([[0.2],[0.3],[0.5],[0.7],[1]])
-y_tr=np.array([0,0,0,1,1])
+def train_test_split(x,y,test_size):
+    m=len(x)
+    indices = np.random.permutation(m)  # save it
+    x = x[indices]  # apply shuffle to x
+    y = y[indices]
+    split=int((1-test_size)*m)
+    x_train=x[:split]
+    x_test=x[split:]
+    y_train=y[:split]
+    y_test=y[split:]
+    return x_train, x_test, y_train, y_test
 
+data = load_breast_cancer()
+x = data.data
+y = data.target
+x = (x - x.mean(axis=0)) / x.std(axis=0)
 model=LogisticReg(0.1,10000)
-model.update(x_tr,y_tr)
-x_test=np.array([0.9])
-y_out=model.output(x_test)
-print(f"Output is: {y_out}")
-model.sigmoid_plot(x_tr,y_tr,0)
-c=model.cost_func(x_tr,y_tr)
-print(f"cost is {c}")
+# split here before model.update
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+#update
+model.update(x_train,y_train)
+print(f"Output is: {model.output(x)}")
+model.sigmoid_plot(x_train,y_train,0)
+print(f"Train accuracy: {model.accuracy(x_train, y_train):.4f}")
+print(f"Test accuracy: {model.accuracy(x_test, y_test):.4f}")
+print(f"Train cost: {model.cost_func(x_train, y_train):.4f}")
+print(f"Test cost: {model.cost_func(x_test, y_test):.4f}")
