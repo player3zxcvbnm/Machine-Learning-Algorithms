@@ -58,19 +58,35 @@ class LinearReg:
         # how wrong just using the mean would be
         return 1 - (ss_res / ss_tot)
         # ratio of your error vs baseline error
+
+def train_test_split(x, y, test_size=0.2):
+    m=len(x)
+    indices = np.random.permutation(m)  # save it
+    x = x[indices]  # apply shuffle to x
+    y = y[indices]  # apply same shuffle to y
+    split=int(0.8*m)
+    x_train=x[:split]
+    x_test=x[split:]
+    y_train=y[:split]
+    y_test=y[split:]
+    return x_train, x_test, y_train, y_test
     
     
 data = fetch_california_housing()
-x = data.data[:, 0:1]  # just one feature first
+x = data.data
+# Add this after x = data.data
+x = (x - x.mean(axis=0)) / x.std(axis=0)
+print(f"x mean after norm: {x.mean(axis=0)[:3]}")
 y = data.target
 
-model=LinearReg(0.03,1000)
+# split here before model.update
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
-model.update(x,y)
+model=LinearReg(0.01,3000)
 
-x_in = np.array([[5]]) 
-y_out=model.predict(x_in)
-print(f"Estimated output = {y_out[0]}")
+model.update(x_train, y_train)
+
 model.graph(x,y,0)
 print(f"Final cost: {model.total_cost(x, y):.4f}")
-print(f"R2 Score: {model.r2_score(x, y):.4f}")
+print(f"Train R2: {model.r2_score(x_train, y_train):.4f}")
+print(f"Test R2: {model.r2_score(x_test, y_test):.4f}")
