@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import sys
-sys.path.append('C:/Users/ADMIN/.vscode/MachineLearningLibraries/Supervised')  # or wherever LinearRegression.py lives
+sys.path.append('C:/Users/ADMIN/.vscode/MachineLearningLibraries/Supervised')
 from LinearRegression import LinearReg, train_test_split
 import requests
 
