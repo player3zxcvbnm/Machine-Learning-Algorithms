@@ -72,21 +72,4 @@ def train_test_split(x, y, test_size=0.2):
     return x_train, x_test, y_train, y_test
     
     
-data = fetch_california_housing()
-x = data.data
-# Add this after x = data.data
-x = (x - x.mean(axis=0)) / x.std(axis=0)
-print(f"x mean after norm: {x.mean(axis=0)[:3]}")
-y = data.target
 
-# split here before model.update
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
-
-model=LinearReg(0.01,3000)
-
-model.update(x_train, y_train)
-
-model.graph(x,y,0)
-print(f"Final cost: {model.total_cost(x, y):.4f}")
-print(f"Train R2: {model.r2_score(x_train, y_train):.4f}")
-print(f"Test R2: {model.r2_score(x_test, y_test):.4f}")
