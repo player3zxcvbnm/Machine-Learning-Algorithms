@@ -13,3 +13,8 @@ California Housing dataset (20,640 samples, 8 features)
 ### How to run
 1. Install dependencies: `pip install numpy scikit-learn matplotlib`
 2. Run: `python Supervised/LinearRegression.py`
+
+## Live Demo
+https://linear-stock-predictor.onrender.com
+
+Enter any stock ticker (AAPL, GOOGL, TSLA, MSFT) to get tomorrow's predicted price.
