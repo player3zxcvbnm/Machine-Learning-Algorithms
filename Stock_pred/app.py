@@ -1,10 +1,10 @@
 from flask import Flask, request
 import sys
-sys.path.append('C:/Users/ADMIN/.vscode/MachineLearningLibraries/Supervised')
-from StockPredictor import get_prediction
 import os
-API_KEY = os.environ.get('ALPHAVANTAGE_API_KEY')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'Supervised'))
+from StockPredictor import get_prediction
 
+API_KEY = os.environ.get('ALPHAVANTAGE_API_KEY')
 app = Flask(__name__)
 
 @app.route('/')
